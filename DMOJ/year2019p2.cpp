@@ -8,14 +8,13 @@ using namespace std;
 int N, M;
 pair<int, int> children[MAXN];
 bitset<MAXN> state;
-bitset<MAXN> dp[10];
+bitset<MAXN> dp[MAXM];
 
 
 void test(int idx) {
      if(idx == N + 1) return;
      
      state[idx].flip();
-
      state[idx] ? test(children[idx].first) : test(children[idx].second);
 
      return;
@@ -34,9 +33,8 @@ int main() {
      test(0);
 
      for(int i = 1; i < M; i++) {
-          if(state.count() == 0) { state = dp[M % i]; break; } 
-          
-	  dp[i % 10] = state;
+          if(state.count() == 0) { state = dp[M % i]; break; }  
+	  dp[i] = state;
 	  test(0);
      }
 
