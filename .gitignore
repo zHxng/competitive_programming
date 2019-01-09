@@ -2,4 +2,4 @@
 cmake*
 *.exe
 main.cpp
-build/*
+build*
