@@ -12,7 +12,7 @@ int height[MAXN];
 void sim() {
     int idx = 1;
 
-    while (idx != N + 1) {
+    while(idx != N + 1) {
         state[idx] ^= 1;
         if(state[idx]) idx = children[idx].first;
         else idx = children[idx].second;
@@ -21,7 +21,8 @@ void sim() {
 
 int max_height(int idx) {
     if(idx == N + 1) return 0;
-    if(height[idx] != -1) return height[idx];
+    if(height[idx] != 0) return height[idx];
+    if(children[idx].first == children[idx].second && children[idx].first != N + 1) return max_height(children[idx].first);
      
     int ans = max(max_height(children[idx].first), max_height(children[idx].second)) + 1;
     height[idx] = ans;
@@ -36,11 +37,10 @@ int main() {
         children[i] = make_pair(a, b);
     }
 
-    memset(height, -1, sizeof height);
+    memset(height, 0, sizeof height);
     memset(state, 0, sizeof state);
 
-    int h = max_height(1);
-    int cyc = M % (1 << h);
+    int cyc = M % (1 << max_height(1));
      
     for(int i = 0; i < cyc; i++) {
         sim();
