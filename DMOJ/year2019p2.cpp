@@ -1,48 +1,54 @@
 #include <bits/stdc++.h>
 
-#define MAXN 0xF4243
-#define MAXM 0x3B9ACA03
+#define MAXN 0xF4242
 
 using namespace std;
 
 int N, M;
 pair<int, int> children[MAXN];
-bitset<MAXN> state;
-bitset<MAXN> dp[MAXM];
+bool state[MAXN];
+int height[MAXN];
 
+void sim() {
+     int idx = 1;
 
-void test(int idx) {
-     if(idx == N + 1) return;
+     while (idx != N + 1) {
+          state[idx] ^= 1;
+          if(state[idx]) idx = children[idx].first;
+          else idx = children[idx].second;
+     }
+}
+
+int max_height(int idx) {
+     if(idx == N + 1) return 0;
+     if(height[idx] != -1) return height[idx];
      
-     state[idx].flip();
-     state[idx] ? test(children[idx].first) : test(children[idx].second);
-
-     return;
+     int ans = max(max_height(children[idx].first), max_height(children[idx].second)) + 1;
+     height[idx] = ans;
+     return ans;
 }
 
 int main() {
-     cin >> N >> M;
-     
-     children[0] = {1, 1};
+     scanf("%d%d", &N, &M);
 
      for(int i = 1, a, b; i < N + 1; i++) {
-          scanf("%d %d", &a, &b);
-	  children[i] = {a, b};
+          scanf("%d%d", &a, &b);
+          children[i] = make_pair(a, b);
      }
 
-     test(0);
+     memset(height, -1, sizeof height);
+     memset(state, 0, sizeof state);
 
-     for(int i = 1; i < M; i++) {
-          if(state.count() == 0) { state = dp[M % i]; break; }  
-	  dp[i] = state;
-	  test(0);
+     int h = max_height(1);
+     int cyc = M % (1 << h);
+     
+     for(int i = 0; i < cyc; i++) {
+          sim();
      }
 
      for(int i = 1; i < N + 1; i++) {
-          printf("%d", state[i] ? 1 : 0);
+          printf("%d", state[i]);
      }
 
      printf("\n");
-
-     return 0;
 }
