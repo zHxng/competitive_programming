@@ -38,12 +38,11 @@ long long bsearch(int n) {
     return pos;
 }
  
-int main(){    
+int main() {    
     cin >> N;     
            
     for(int i = 1, in; i <= N; i++) {                
-        cin >> in;
-                                                 
+        cin >> in;                                             
         long long ans = bsearch(in);
 
         if(ans == MAXN + 1 || tzero(ans) != in) { 
