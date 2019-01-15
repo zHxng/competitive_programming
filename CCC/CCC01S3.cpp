@@ -8,7 +8,6 @@ bool disconnect() {
     bool visited[27];
     queue<int> q;
 
-    while(!q.empty()) { q.pop(); }
     memset(visited, 0, sizeof visited);
 
     q.push(0);
@@ -21,7 +20,7 @@ bool disconnect() {
 
 	visited[current] = true;
 
-	for(int i = 0; i < 27; i++){
+	for(int i = 0; i < 27; i++) {
 	    if((adjmatrix[current][i] || adjmatrix[i][current]) && !visited[i]) {
     		q.push(i);
 	    }
