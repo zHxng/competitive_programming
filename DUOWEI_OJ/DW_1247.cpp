@@ -17,15 +17,14 @@ int hashstr(string str) {
     return result;
 }
  
-int main(){
+int main() {
     cin >> N;
            
     for (int i = 0; i < N; i++) {                
         string str;                            
         cin >> str;
         
-        a.push_back(hashstr(str));
-                                            
+        a.push_back(hashstr(str));                                  
     }    
     
     cin >> M;
